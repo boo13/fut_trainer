@@ -10,11 +10,15 @@ from pathlib import Path
 import pandas as pd
 from loguru import logger
 import imutils
+from datetime import datetime
 
 logger.debug(f"Tensorflow Version: {tf.__version__}")
 
 DATA_DIR = Path("../../data")
 assert DATA_DIR.is_dir()
+
+OUTPUT_DIR = Path("../../output")
+assert OUTPUT_DIR.is_dir()
 
 def main():
     cap = cv2.VideoCapture(0)
