@@ -1,0 +1,11 @@
+tensorflow
+black
+loguru
+opencv-contrib-python
+pandas
+imutils
+mypy
+streamlink
+pillow
+jupyter
+matplotlib
