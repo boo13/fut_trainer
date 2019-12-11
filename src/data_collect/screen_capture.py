@@ -36,6 +36,17 @@ def main(vid_source=0, show=True, save=True, save_timer=30):
 
     cap = cv2.VideoCapture(vid_source)
 
+    # Get video properties
+    width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    fps = cap.get(cv2.CAP_PROP_FPS)
+    frame_time = round(1000 / fps)
+
+    # Print video properties
+    logger.info(f"Video Captured")
+    logger.debug(f"{width}px X {height}px")
+    logger.debug(f"FPS: {fps}    Frame Time: {frame_time}")
+
     t = datetime.now()
 
     while True:
