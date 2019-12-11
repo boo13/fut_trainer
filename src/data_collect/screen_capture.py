@@ -2,15 +2,19 @@
 Simply display the contents of the webcam with optional mirroring using OpenCV
 via the new Pythonic cv2 interface.  Press <esc> to quit.
 """
+# Built-ins
+import os
+import random
+import string
+from pathlib import Path
+from datetime import datetime
 
+# Pip Installs
 import tensorflow as tf
 import cv2
-import os
-from pathlib import Path
 import pandas as pd
 from loguru import logger
 import imutils
-from datetime import datetime
 
 logger.debug(f"Tensorflow Version: {tf.__version__}")
 
@@ -20,15 +24,38 @@ assert DATA_DIR.is_dir()
 OUTPUT_DIR = Path("../../output")
 assert OUTPUT_DIR.is_dir()
 
-def main():
-    cap = cv2.VideoCapture(0)
-    while True:
-        ok, img = cap.read()
 
-        if ok:
-            cv2.imshow('webcam', img)
-        else:
+def random_string(stringLength=4):
+    """Generate a random string of fixed length """
+    letters = string.ascii_lowercase
+    return ''.join(random.choice(letters) for i in range(stringLength))
+
+def main(vid_source=0, show=True, save=True, save_timer=30):
+    screenshot_count = 0
+    session_id = random_string()
+
+    cap = cv2.VideoCapture(vid_source)
+
+    t = datetime.now()
+
+    while True:
+        ok, frame = cap.read()
+
+        if not ok:
             break
+
+        delta = datetime.now() - t
+
+        if show:
+            cv2.imshow(f'Video Source: {vid_source}', frame)
+
+        if save and delta.seconds >= save_timer:
+            screenshot_count += 1
+            _fn = str(OUTPUT_DIR / f"{session_id}_{screenshot_count:05}.jpg")
+            cv2.imwrite(_fn, frame)
+            logger.debug(f"[SCREENSHOT] {_fn}")
+            t = datetime.now()
+
         if cv2.waitKey(1) == 27:
             break  # esc to quit
     cap.release()
@@ -45,7 +72,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     if not args.dry_run:
-        logger.debug("Preparing to save screenshots...")
+        logger.info("Preparing to save screenshots...")
         main()
 
     else:
