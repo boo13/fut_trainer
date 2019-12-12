@@ -9,3 +9,4 @@ streamlink
 pillow
 jupyter
 matplotlib
+scikit-learn
