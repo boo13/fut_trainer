@@ -44,6 +44,7 @@ def main(vid_source=0, show=True, save=True, save_timer=30):
 
     # Print video properties
     logger.info(f"Video Captured")
+    logger.debug(f"Session ID: {session_id}")
     logger.debug(f"{width}px X {height}px")
     logger.debug(f"FPS: {fps}    Frame Time: {frame_time}")
 
@@ -52,14 +53,23 @@ def main(vid_source=0, show=True, save=True, save_timer=30):
     while True:
         ok, frame = cap.read()
 
+        # Exit loop if no frame found
         if not ok:
             break
 
-        delta = datetime.now() - t
+        # If we have a frame from the Mira capture card we have a letter-boxed frame...
+        # Then crop the frame to lose the black bars on top and bottom of the frame
+        if width == 640 and height == 480:
+            frame = frame[60:420, 0:width]
 
+        # Display the frame being captured (Default: True)
         if show:
             cv2.imshow(f'Video Source: {vid_source}', frame)
 
+        # Check the timer, used for screenshooting
+        delta = datetime.now() - t
+
+        # Take a screenshot if we're saving (Default: True)
         if save and delta.seconds >= save_timer:
             screenshot_count += 1
             _fn = str(OUTPUT_DIR / f"{session_id}_{screenshot_count:05}.jpg")
@@ -67,8 +77,9 @@ def main(vid_source=0, show=True, save=True, save_timer=30):
             logger.debug(f"[SCREENSHOT] {_fn}")
             t = datetime.now()
 
+        # esc to quit
         if cv2.waitKey(1) == 27:
-            break  # esc to quit
+            break
     cap.release()
     cv2.destroyAllWindows()
 
