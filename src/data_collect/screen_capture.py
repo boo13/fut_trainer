@@ -21,7 +21,7 @@ logger.debug(f"Tensorflow Version: {tf.__version__}")
 DATA_DIR = Path("../../data")
 assert DATA_DIR.is_dir()
 
-OUTPUT_DIR = Path("../../output")
+OUTPUT_DIR = Path("../../data/raw")
 assert OUTPUT_DIR.is_dir()
 
 
