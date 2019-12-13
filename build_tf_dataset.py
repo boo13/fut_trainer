@@ -4,6 +4,7 @@ Returns:
     [type] -- [description]
 """
 import tensorflow as tf
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
 import IPython.display as display
 from PIL import Image
 import numpy as np
@@ -13,30 +14,27 @@ from pathlib import Path
 
 from loguru import logger
 
-data_dir = Path("data/cleaned/classifier_screenshots")
-assert data_dir.is_dir()
+from config import DATA_DIR, TEST_DIR, IMG_HEIGHT, IMG_WIDTH, BATCH_SIZE, AUTOTUNE
 
-AUTOTUNE = tf.data.experimental.AUTOTUNE
-BATCH_SIZE = 32
-IMG_HEIGHT = 224
-IMG_WIDTH = 224
 
-image_count = len(list(data_dir.glob("*/*.jpg")))
+logger.info("Starting up...")
+
+image_count = len(list(DATA_DIR.glob("train/*/*.jpg")))
 logger.debug(image_count)
 
 STEPS_PER_EPOCH = np.ceil(image_count / BATCH_SIZE)
 
 
 CLASS_NAMES = np.array(
-    [item.name for item in data_dir.glob("*") if item.name != "LICENSE.txt"]
+    [item.name for item in DATA_DIR.glob("*") if item.name != "LICENSE.txt"]
 )
 logger.debug(CLASS_NAMES)
 
 
-list_ds = tf.data.Dataset.list_files(str(data_dir / "*/*"))
+list_ds = tf.data.Dataset.list_files(str(DATA_DIR / "*/*"))
 
-for f in list_ds.take(5):
-    print(f.numpy())
+# for f in list_ds.take(5):
+#     print(f.numpy())
 
 
 def get_label(file_path):
@@ -71,12 +69,12 @@ def process_path(file_path):
 # Set `num_parallel_calls` so multiple images are loaded/processed in parallel.
 labeled_ds = list_ds.map(process_path, num_parallel_calls=AUTOTUNE)
 
-for image, label in labeled_ds.take(1):
-    print("Image shape: ", image.numpy().shape)
-    print("Label: ", label.numpy())
+# for image, label in labeled_ds.take(1):
+#     print("Image shape: ", image.numpy().shape)
+#     print("Label: ", label.numpy())
 
 
-def prepare_for_training(ds, cache=True, shuffle_buffer_size=1000):
+def prepare_for_training(ds, cache=False, shuffle_buffer_size=1000):
     # This is a small dataset, only load it once, and keep it in memory.
     # use `.cache(filename)` to cache preprocessing work for datasets that don't
     # fit in memory.
@@ -102,7 +100,7 @@ def prepare_for_training(ds, cache=True, shuffle_buffer_size=1000):
 
 train_ds = prepare_for_training(labeled_ds)
 
-# image_batch, label_batch = next(iter(train_ds))
+image_batch, label_batch = next(iter(train_ds))
 
 # show_batch(image_batch.numpy(), label_batch.numpy())
 
