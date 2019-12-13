@@ -74,7 +74,7 @@ labeled_ds = list_ds.map(process_path, num_parallel_calls=AUTOTUNE)
 #     print("Label: ", label.numpy())
 
 
-def prepare_for_training(ds, cache=True, shuffle_buffer_size=1000):
+def prepare_for_training(ds, cache=False, shuffle_buffer_size=1000):
     # This is a small dataset, only load it once, and keep it in memory.
     # use `.cache(filename)` to cache preprocessing work for datasets that don't
     # fit in memory.
@@ -100,7 +100,7 @@ def prepare_for_training(ds, cache=True, shuffle_buffer_size=1000):
 
 train_ds = prepare_for_training(labeled_ds)
 
-# image_batch, label_batch = next(iter(train_ds))
+image_batch, label_batch = next(iter(train_ds))
 
 # show_batch(image_batch.numpy(), label_batch.numpy())
 
