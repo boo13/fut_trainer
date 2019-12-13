@@ -2,5 +2,6 @@
     "python.pythonPath": "/Users/randycounsman/git/boo13/fut_trainer/venv/bin/python3.7",
     "python.linting.pylintEnabled": false,
     "python.linting.mypyEnabled": true,
-    "python.linting.enabled": true
+    "python.linting.enabled": true,
+    "python.formatting.provider": "black"
 }

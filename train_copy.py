@@ -7,9 +7,9 @@ matplotlib.use("Agg")
 # feature -- I found that by setting the logging level I can suppress
 # the warnings from showing up (likely won't be required in future
 # releases of TensorFlow)
-import logging
+# import logging
 
-logging.getLogger("tensorflow").setLevel(logging.CRITICAL)
+# logging.getLogger("tensorflow").setLevel(logging.CRITICAL)
 
 # import the necessary packages
 from pyimagesearch.models import MiniVGGNetModel
@@ -33,9 +33,6 @@ ap.add_argument(
     default="sequential",
     choices=["sequential", "functional", "class"],
     help="type of model architecture",
-)
-ap.add_argument(
-    "-p", "--plot", type=str, required=True, help="path to output plot file"
 )
 args = vars(ap.parse_args())
 
@@ -140,4 +137,4 @@ plt.title(title)
 plt.xlabel("Epoch #")
 plt.ylabel("Loss/Accuracy")
 plt.legend()
-plt.savefig(args["plot"])
+plt.savefig("test_plot.png")
