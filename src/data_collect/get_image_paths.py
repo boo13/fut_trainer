@@ -1,4 +1,4 @@
-# For the file dir walking code, thanks to https://github.com/jrosebr1/imutils
+# Credit to https://github.com/jrosebr1/imutils
 import os
 
 image_types = (".jpg", ".jpeg", ".png", ".bmp", ".tif", ".tiff")
@@ -39,6 +39,7 @@ if __name__ == "__main__":
     im_list = list(list_images("data"))
 
     for f in im_list:
+        # filename = f.split("/")[-1]
         img = cv2.imread(f)
 
         h, w, channels = img.shape
