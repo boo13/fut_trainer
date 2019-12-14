@@ -26,7 +26,11 @@ STEPS_PER_EPOCH = np.ceil(image_count / BATCH_SIZE)
 
 
 CLASS_NAMES = np.array(
-    [item.name for item in DATA_DIR.glob("*") if item.name != "LICENSE.txt"]
+    [
+        item.name
+        for item in DATA_DIR.glob("*")
+        if item.name != "LICENSE.txt" and item.name != ".DS_STORE"
+    ]
 )
 logger.debug(CLASS_NAMES)
 
