@@ -27,29 +27,3 @@ def list_files(basePath, validExts=None, contains=None):
                 # construct the path to the image and yield it
                 imagePath = os.path.join(rootDir, filename)
                 yield imagePath
-
-
-if __name__ == "__main__":
-
-    import cv2
-
-    image_counter = 0
-    resized_images = 0
-
-    im_list = list(list_images("data"))
-
-    for f in im_list:
-        # filename = f.split("/")[-1]
-        img = cv2.imread(f)
-
-        h, w, channels = img.shape
-
-        if w == 640 and h == 480:
-            img = img[60:420, 0:w]
-            cv2.imwrite(f, img)
-            image_counter += 1
-        else:
-            resized_images += 1
-
-    print(f"Images of 640 x 480: {image_counter}")
-    print(f"Images of other sizes: {resized_images}")
