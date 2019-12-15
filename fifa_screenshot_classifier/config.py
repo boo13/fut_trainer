@@ -34,7 +34,7 @@ assert OUTPUT_DIR.is_dir()
 MODEL_DIR = Path("models")
 
 # Model output
-MODEL_PATH = MODEL_DIR / "fifa_screenshot_classifier.model"
+MODEL_PATH = MODEL_DIR / "fifa_screenshot_classifier.h5"
 
 # define the path to the output learning rate finder plot
 LRFIND_PLOT_PATH = OUTPUT_DIR / "lrfind_plot.png"
