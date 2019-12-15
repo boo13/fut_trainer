@@ -12,7 +12,7 @@ from data_collect import screen_capture
 
 # load the trained model from disk
 print("[INFO] loading model...")
-model = load_model(config.MODEL_PATH)
+model = load_model(config.MODEL_DIR)
 
 # # grab the paths to the fire and non-fire images, respectively
 # print("[INFO] predicting...")
