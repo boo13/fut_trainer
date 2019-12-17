@@ -26,12 +26,25 @@ assert TRAIN_DIR.is_dir()
 TEST_DIR = DATA_DIR / "test"
 assert TEST_DIR.is_dir()
 
+
+# Unsorted (Used for evaluating manually)
+UNSORTED_DIR = DATA_DIR / "unsorted"
+assert UNSORTED_DIR.is_dir()
+
+# Sample size for manual evaluation
+SAMPLE_SIZE = 50
+
+# Unsorted output (for manually checking)
+OUTPUT_IMAGE_PATH = UNSORTED_DIR / "output"
+assert OUTPUT_IMAGE_PATH
+
 # Output
 OUTPUT_DIR = Path("output")
 assert OUTPUT_DIR.is_dir()
 
 # Model output dir
 MODEL_DIR = Path("models")
+assert MODEL_DIR.is_dir()
 
 # Model output
 MODEL_PATH = MODEL_DIR / "fifa_screenshot_classifier.h5"
