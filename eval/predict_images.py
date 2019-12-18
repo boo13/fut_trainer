@@ -20,14 +20,6 @@ print("[INFO] predicting...")
 
 unsorted_images = list(paths.list_images(config.UNSORTED_DIR))
 
-# firePaths = list(paths.list_images(config.FIRE_PATH))
-# nonFirePaths = list(paths.list_images(config.NON_FIRE_PATH))
-
-# combine the two image path lists, randomly shuffle them, and sample
-# them
-# imagePaths = firePaths + nonFirePaths
-# random.shuffle(imagePaths)
-
 if config.SAMPLE_SIZE > 0:
     unsorted_images = unsorted_images[: config.SAMPLE_SIZE]
 

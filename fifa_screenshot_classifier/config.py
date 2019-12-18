@@ -10,12 +10,27 @@ from datetime import datetime
 from loguru import logger
 import numpy as np
 
+
+# ###########################################################
+#                           Config
+# ###########################################################
+
+IMG_WIDTH = 224
+IMG_HEIGHT = 224
+
+INIT_LR = 1e-2
+EPOCHS = 100
+BATCH_SIZE = 32
+
+date_string = "{:%Y.%m.%d}".format(datetime.now())
+logger.debug("Date string is set to: {date_string}")
+
 # ###########################################################
 #                           Paths
 # ###########################################################
 
 # Data
-DATA_DIR = Path("data/fifa_screenshot_classifier")
+DATA_DIR = Path("data/game_not_game")
 assert DATA_DIR.is_dir()
 
 # Train
@@ -26,17 +41,20 @@ assert TRAIN_DIR.is_dir()
 TEST_DIR = DATA_DIR / "test"
 assert TEST_DIR.is_dir()
 
+# Valid
+VALID_DIR = DATA_DIR / "valid"
+assert VALID_DIR.is_dir()
 
 # Unsorted (Used for evaluating manually)
-UNSORTED_DIR = DATA_DIR / "unsorted"
-assert UNSORTED_DIR.is_dir()
+# UNSORTED_DIR = DATA_DIR / "unsorted"
+# assert UNSORTED_DIR.is_dir()
 
 # Sample size for manual evaluation
 SAMPLE_SIZE = 50
 
 # Unsorted output (for manually checking)
-OUTPUT_IMAGE_PATH = UNSORTED_DIR / "output"
-assert OUTPUT_IMAGE_PATH
+# OUTPUT_IMAGE_PATH = UNSORTED_DIR / "output"
+# assert OUTPUT_IMAGE_PATH
 
 # Output
 OUTPUT_DIR = Path("output")
@@ -47,7 +65,8 @@ MODEL_DIR = Path("models")
 assert MODEL_DIR.is_dir()
 
 # Model output
-MODEL_PATH = MODEL_DIR / "fifa_screenshot_classifier.h5"
+MODEL_PATH = MODEL_DIR / f"fifa_screenshot_classifier.h5"
+logger.debug("Model Path set to: {MODEL_PATH}")
 
 # define the path to the output learning rate finder plot
 LRFIND_PLOT_PATH = OUTPUT_DIR / "lrfind_plot.png"
@@ -67,21 +86,10 @@ CLASS_NAMES = np.array(
 TOTAL_NUM_TRAIN_IMAGES = len(list(TRAIN_DIR.glob("*/*.jpg")))
 TOTAL_NUM_TEST_IMAGES = len(list(TEST_DIR.glob("*/*.jpg")))
 
-
-# ###########################################################
-#                           Config
-# ###########################################################
-
-IMG_WIDTH = 224
-IMG_HEIGHT = 224
-
-INIT_LR = 1e-2
-EPOCHS = 25
-BATCH_SIZE = 32
 STEPS_PER_EPOCH = np.ceil(TOTAL_NUM_TRAIN_IMAGES / BATCH_SIZE)
 
 # ###########################################################
-#                           Fimctopms
+#                           Functions
 # ###########################################################
 
 
